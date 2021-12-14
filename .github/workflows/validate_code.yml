@@ -2,6 +2,10 @@ name: validate generic code
 
 on:
   workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        description: The GITHUB_TOKEN
+        required: true
 
 jobs:
   validate-code:
