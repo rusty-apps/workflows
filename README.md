@@ -37,7 +37,6 @@ Available linters:
 | dockerlint   | dockerfile - path to a Dockerfile |
 | markdownlint |                                   |
 | rustlint     |                                   |
-| superlint    |                                   |
 | workflowlint |                                   |
 | yamllint     |                                   |
 
