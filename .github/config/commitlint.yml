@@ -2,6 +2,8 @@ extends:
   - "@commitlint/config-lerna-scopes"
   - "@commitlint/config-conventional"
 rules:
+  subject-full-stop: [1, "never", '.']
+  header-full-stop: [1, "never", '.']
   header-max-length: [1, "always", 72]
   type-enum:
     - 2
