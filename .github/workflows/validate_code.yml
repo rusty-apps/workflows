@@ -2,10 +2,45 @@ name: validate generic code
 
 on:
   workflow_call:
-
+    inputs:
+      dockerlint:
+        description: Run dockerlint
+        required: false
+        type: boolean
+        default: false
+      dockerfile:
+        description: Dockerfile path for linting (default Dockerfile)
+        required: false
+        type: string
+        default: Dockerfile
+      markdownlint:
+        description: Run Markdown lint
+        required: false
+        type: boolean
+        default: false
+      rustlint:
+        description: Run rust lint
+        required: false
+        type: boolean
+        default: false
+      superlint:
+        description: Run superlint
+        required: false
+        type: boolean
+        default: false
+      workflowlint:
+        description: Run workflow lint
+        required: false
+        type: boolean
+        default: false
+      yamllint:
+        description: Run yaml lint
+        required: false
+        type: boolean
+        default: false
 jobs:
   validate-code:
-    name: Validate application and docker code
+    name: Validate application, actions and docker code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -13,7 +48,35 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Lint sources
+      # Dockerfile
+      - name: Lint Dockerfile
+        if: ${{ inputs.dockerlint == true }}
+        uses: ./.github/actions/dockerfile-lint
+        with:
+          dockerfile: ${{ inputs.dockerfile }}
+
+      # Markdown
+      - name: Lint Markdown
+        if: ${{ inputs.markdownlint }}
+        uses: nosborn/github-action-markdown-cli@v2.0.0
+        with:
+          files: .
+
+      # Rust source
+      - name: Lint Rust source - add clippy
+        if: ${{ inputs.rustlint == true }}
+        run: rustup component add clippy
+
+      - name: lint Rust source
+        if: ${{ inputs.rustlint == true }}
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
+
+      # Superlint - not recommended due to size
+      - name: Lint sources with Superlint
+        if: ${{ inputs.superlint == true }}
         uses: docker://ghcr.io/github/super-linter:slim-v4
         env:
           DEFAULT_BRANCH: main
@@ -27,3 +90,15 @@ jobs:
           VALIDATE_MARKDOWN: true
           VALIDATE_SHELL_SHFMT: true
           VALIDATE_YAML: true
+
+      # Workflows
+      - name: Lint workflows
+        if: ${{ inputs.workflowlint == true }}
+        uses: cschleiden/actions-linter@v1
+        with:
+          workflows: '[".github/workflows/*.yaml"]'
+
+      # Yaml
+      - name: Lint yaml files
+        if: ${{ inputs.yamllint == true }}
+        uses: ibiqlik/action-yamllint@v3
