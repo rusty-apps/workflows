@@ -33,6 +33,11 @@ on:
         required: false
         type: boolean
         default: false
+      debug:
+        description: Enable debugging
+        required: false
+        type: boolean
+        default: false
 jobs:
   validate-code:
     name: Validate application, actions and docker code
@@ -44,13 +49,13 @@ jobs:
           fetch-depth: 0
 
       - name: Dump GitHub context
-        if: ${{ secrets.ACTIONS_STEP_DEBUG == true }}
+        if: ${{ inputs.debug == true }}
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
 
       - name: Workflow Repo - Dump some env variables
-        if: ${{ secrets.ACTIONS_STEP_DEBUG == true }}
+        if: ${{ inputs.debug == true }}
         run: |
           echo "HOME                 ${HOME}"
           echo "CI                   ${CI}"

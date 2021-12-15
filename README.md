@@ -40,6 +40,10 @@ Available linters:
 | workflowlint |                                   |
 | yamllint     |                                   |
 
+| Other Switches | Dtails                  |
+| :------------- | :---------------------- |
+| debug          | Turn on extra debugging |
+
 > validate-comits
 
 Commit validation.
