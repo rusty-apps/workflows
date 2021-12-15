@@ -8,7 +8,7 @@ on:
         required: false
         type: boolean
         default: false
-      dockerfile_path:
+      dockerfile:
         description: Dockerfile path for linting (default Dockerfile)
         required: false
         type: string
