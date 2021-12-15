@@ -1,0 +1,17 @@
+name: Validate
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-commits:
+    uses: rusty-apps/workflows/.github/workflows/validate_commits.yml@main
+
+  lint:
+    uses: rusty-apps/workflows/.github/workflows/validate_code.yml@main
+    with:
+      markdownlint: true
+      workflowlint: true
+      yamllint: true
