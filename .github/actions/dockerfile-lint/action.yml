@@ -1,5 +1,5 @@
 name: "Dockerfile Lint Action"
-description: "Action that runs replicatedhq/dockerfilelint linting tool"
+description: "Action that runs squ1d123/dockerfilelint linting tool"
 author: "Tim Preece"
 inputs:
   dockerfile:
@@ -8,7 +8,7 @@ inputs:
     default: "Dockerfile"
 runs:
   using: "docker"
-  image: "theyorkshiredev/dockerfile-linter:1.1.0"
+  image: "squ1d123/dockerfilelint:1.4.0"
   args:
     - ${{ inputs.dockerfile }}
 branding:

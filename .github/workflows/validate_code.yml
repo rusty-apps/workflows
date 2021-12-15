@@ -87,7 +87,8 @@ jobs:
         if: ${{ inputs.dockerlint == true }}
         uses: ./.github/actions/dockerfile-lint
         with:
-          dockerfile: ${{ format('{0}/{1}', github.workspace, inputs.dockerfile) }}
+          dockerfile: ${{ inputs.dockerfile }}
+          # dockerfile: ${{ format('{0}/{1}', github.workspace, inputs.dockerfile) }}
 
       # Markdown
       - name: Lint Markdown
