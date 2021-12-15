@@ -12,6 +12,4 @@ jobs:
   lint:
     uses: rusty-apps/workflows/.github/workflows/validate_code.yml@main
     with:
-      markdownlint: true
       workflowlint: true
-      yamllint: true
