@@ -79,7 +79,7 @@ jobs:
           echo "RUNNER_TEMP          ${RUNNER_TEMP}"
           echo "RUNNER_TOOL_CACHE    ${RUNNER_TOOL_CACHE}"
           echo "------------------------------------------"
-          echo "$(pwd)"
+          pwd
           ls -la
 
       # Dockerfile
