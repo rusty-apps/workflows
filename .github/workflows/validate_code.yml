@@ -23,11 +23,6 @@ on:
         required: false
         type: boolean
         default: false
-      superlint:
-        description: Run superlint
-        required: false
-        type: boolean
-        default: false
       workflowlint:
         description: Run workflow lint
         required: false
@@ -73,23 +68,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-features
-
-      # Superlint - not recommended due to size
-      - name: Lint sources with Superlint
-        if: ${{ inputs.superlint == true }}
-        uses: docker://ghcr.io/github/super-linter:slim-v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: true
-          IGNORE_GITIGNORED_FILES: true
-          IGNORE_GENERATED_FILES: false
-          VALIDATE_DOCKERFILE: true
-          VALIDATE_EDITORCONFIG: true
-          VALIDATE_GITHUB_ACTIONS: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_SHELL_SHFMT: true
-          VALIDATE_YAML: true
 
       # Workflows
       - name: Lint workflows
